@@ -1,0 +1,21 @@
+{
+  "name": "serverthuvienpoly",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "Quan ly thu vien poly "
+  },
+  "keywords": [
+    "Vinh",
+    "Hung",
+    "Son",
+    "Quy",
+    "Thai"
+  ],
+  "author": "Nhom 3 Xuong Lap Trinh Poly",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
