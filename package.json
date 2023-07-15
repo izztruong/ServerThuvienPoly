@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon index.js",
     "test": "Quan ly thu vien poly "
   },
   "keywords": [
@@ -16,6 +17,11 @@
   "author": "Nhom 3 Xuong Lap Trinh Poly",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.18.2"
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-handlebars": "^7.0.7",
+    "mongoose": "^7.3.2",
+    "nodemon": "^2.0.22"
   }
 }
