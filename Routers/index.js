@@ -1,5 +1,5 @@
-const Bookrouter = require("./Book.Router");
-function routers(app) {
-  app.use("/books", Bookrouter);
+const book = require('./Book.Router')
+function routes(app) {
+  app.use("/Book", book);
 }
-module.exports = routers();
+module.exports = routes;
