@@ -1,38 +1,41 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const Librarian = new mongoose.Schema({
-    name : {
-        typeo : String,
-        required : true,
+const Librarian = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
     },
-    sex:{
-        typeo : String,
-        required: true,
+    sex: {
+      type: String,
+      required: true,
     },
-    date: {
-        typeo: String,
-        required: true,
+    birthday: {
+      type: String,
+      required: true,
     },
     address: {
-        typeo : String,
-        required: true,
+      type: String,
+      required: true,
     },
-    phone:{
-        typeo : String,
-        required : true,
+    phone: {
+      type: String,
+      required: true,
     },
-    email : {
-        typeo : String,
-        required :  true,
+    email: {
+      type: String,
+      required: true,
     },
-    dateWork : {
-        typeo : String,
-        required :true,
+    dateWork: {
+      type: String,
+      required: true,
     },
-    password : {
-        typeo : String,
-        required: true,
-    }
-},{timestamps:true})
+    password: {
+      type: String,
+      required: true,
+    },
+  },
+  { timestamps: true }
+);
 
-module.exports = new mongoose.model("Librarians",Librarian);
+module.exports = new mongoose.model("Librarians", Librarian);

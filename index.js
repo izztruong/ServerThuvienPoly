@@ -1,12 +1,12 @@
 const express = require("express");
 const app = express();
 const dotenv = require("dotenv");
+dotenv.config();
 const bodyParser = require("body-parser");
 const handlebar = require("express-handlebars");
 const Mongodb = require("./Mongodb/database");
 const router = require("./Routers/index");
-const PORT = 3000;
-dotenv.config();
+const PORT = process.env.PORT;
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.json());
