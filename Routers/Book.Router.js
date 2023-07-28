@@ -9,7 +9,7 @@ routers.delete("/deleteBook/:idBook", BookController.deleteBook);
 routers.get("/listBook", BookController.listBook);
 routers.get("/:idBook", BookController.getBookbyId);
 routers.get(
-  "/getBookFollowCategoryBook",
+  "/getBookFollowCategoryBook/:categoryBook",
   BookController.getBookFollowCategoryBook
 );
 
