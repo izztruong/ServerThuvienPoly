@@ -1,4 +1,3 @@
-const { response } = require("express");
 const bookModel = require("../Model/Books.Model");
 
 class BookController {
@@ -75,6 +74,16 @@ class BookController {
       return res.status(404).json({ message: "Book not found" });
     }
     res.status(200).json(req.body);
+  }
+
+  // lọc theo thể loại
+  async getBookFollowCategoryBook(req, res, next) {
+    const categoryBook = req.params.categoryBook;
+    const books = await bookModel.find({ categoryBook: categoryBook });
+    if (!books) {
+      return res.status(404).json({ message: "Category not found" });
+    }
+    res.status(200).json(books);
   }
 }
 module.exports = new BookController();

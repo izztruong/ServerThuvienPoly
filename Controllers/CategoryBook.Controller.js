@@ -12,6 +12,12 @@ class CategoryBookController {
         .status(404)
         .json({ message: "Các trường không được để trống" });
     }
+    const check = await categoryBookModel.findOne({
+      nameCategory: categoryBook.nameCategory,
+    });
+    if (check) {
+      res.status(400).json({ message: "nameCategory đã tồn tại" });
+    }
     const items = new categoryBookModel(categoryBook);
     try {
       console.log(items);
@@ -33,7 +39,12 @@ class CategoryBookController {
   }
 
   async updateCategoryBook(req, res, next) {
-    const idCategoryBook = req.params.idCategoryBook;
+    const categoryBook = req.params.idCategoryBook;
+    if (categoryBook.nameCategory == "") {
+      return res
+        .status(404)
+        .json({ message: "Các trường không được để trống" });
+    }
     const updateCategoryBook = await categoryBookModel.findByIdAndUpdate(
       idCategoryBook,
       req.body
