@@ -6,7 +6,7 @@ const CategoryBook = new mongoose.Schema(
       type: String,
       required: true,
     },
-    Books: [
+    books: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Books",
@@ -15,4 +15,6 @@ const CategoryBook = new mongoose.Schema(
   },
   { timestamps: true }
 );
-module.exports = new mongoose.model("categoryBooks", CategoryBook);
+
+const CategoryBookModel = mongoose.model("CategoryBooks", CategoryBook);
+module.exports = CategoryBookModel;

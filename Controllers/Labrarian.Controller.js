@@ -130,19 +130,54 @@ class librarianController {
         console.log(err);
       });
   }
- async changePassword(req, res) {
+
+  UpdateLibrarian(req, res) {
+    librarian
+      .updateOne(
+        {
+          _id: req.params.id,
+        },
+        {
+          name: req.body.name,
+          sex: req.body.sex,
+          birthday: req.body.birthday,
+          address: req.body.address,
+          phone: req.body.phone,
+          email: req.body.email,
+          dateWork: req.body.dateWork,
+        }
+      )
+      .then(() => {
+        res.status(200).json({ message: "update thành công" });
+      })
+      .catch((err) => {
+        res.status(400).json({ error: err });
+        console.log(err);
+      });
+  }
+
+  async changePassword(req, res) {
     const password = req.body.password;
+    const newpassword = req.body.newpassword;
+    const comfirm_password = req.body.comfirm_password;
+
     try {
-      librarian.findOne({ _id: req.params.id }).then( async (data) => {
-        console.log(data)
+      librarian.findOne({ _id: req.params.id }).then(async (data) => {
+        console.log(data);
         if (!data) {
           res.status(400).json({ message: "Tài khoản không tồn tại" });
         } else {
-          const ismatch = await bcrypt.compare(password , data.password);
-          if (!ismatch){
-            res.status(400).json({message : "Password cũ không đúng"});
+          const ismatch = await bcrypt.compare(password, data.password);
+          if (password == "" || newpassword == "" || comfirm_password == "") {
+            res
+              .status(400)
+              .json({ message: "Các trường dữ liệu không được để trống" });
+          } else if (!ismatch) {
+            res.status(400).json({ message: "Password cũ không đúng" });
+          } else if (newpassword != comfirm_password) {
+            res.status(400).json({ message: "Password nhập lại không đúng" });
           } else {
-           
+            console.log("ok")
           }
         }
       });
