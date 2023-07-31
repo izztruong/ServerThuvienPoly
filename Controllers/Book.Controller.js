@@ -1,6 +1,5 @@
-const { response } = require("express");
 const bookModel = require("../Model/Books.Model");
-
+const cloudinary = require("cloudinary").v2;
 class BookController {
   async getBookbyId(req, res, next) {
     const book = await bookModel
@@ -14,21 +13,26 @@ class BookController {
 
   async addBook(req, res, next) {
     const book = req.body;
+    const img = req.file;
     if (
-      (book.nameBook =
-        "" ||
-        book.categoryBook == "" ||
-        book.author == "" ||
-        book.publishingCompany == "" ||
-        book.publishingYear == "" ||
-        book.language == "" ||
-        book.quanity == "" ||
-        book.price == "")
+      img == undefined ||
+      book.nameBook == "" ||
+      book.categoryBook == "" ||
+      book.author == "" ||
+      book.publishingCompany == "" ||
+      book.publishingYear == "" ||
+      book.language == "" ||
+      book.quanity == "" ||
+      book.price == ""
     ) {
+      if (img) {
+        cloudinary.uploader.destroy(img.filename);
+      }
       return res
         .status(500)
         .json({ message: "Các trường không được bỏ trống" });
     }
+    book.image = img?.path;
     const items = new bookModel(book);
     try {
       console.log(items);
@@ -75,6 +79,16 @@ class BookController {
       return res.status(404).json({ message: "Book not found" });
     }
     res.status(200).json(req.body);
+  }
+
+  // lọc theo thể loại
+  async getBookFollowCategoryBook(req, res, next) {
+    const categoryBook = req.params.categoryBook;
+    const books = await bookModel.find({ categoryBook: categoryBook });
+    if (!books) {
+      return res.status(404).json({ message: "Category not found" });
+    }
+    res.status(200).json(books);
   }
 }
 module.exports = new BookController();

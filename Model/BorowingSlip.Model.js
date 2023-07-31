@@ -25,8 +25,6 @@ const BorowingSlip = new mongoose.Schema({
     price: {
         type:Number
     }
-
-
 },{timestamps:true})
     
 module.exports = new mongoose.model("BorowingSlip", BorowingSlip);
