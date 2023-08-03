@@ -2,14 +2,13 @@ const Admin = require("../Model/Admin.Model");
 const bcrypt = require("bcrypt");
 class AdminController {
   index(req, res) {
-    res.render("");
+    res.render("login",{layout: "main"});
   }
 
   registerAdmin(req, res, next) {
     const email = req.body.email;
     const name = req.body.name;
     bcrypt.hash(req.body.password, 10, (err, handlePassword) => {
-      // console.log(req.body);
       if (err) {
         return res.status(500).json({ error: err });
       } else {

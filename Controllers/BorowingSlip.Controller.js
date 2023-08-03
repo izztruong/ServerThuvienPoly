@@ -2,6 +2,7 @@ const borowingModel = require("../Model/BorowingSlip.Model");
 const Librarian = require("../Model/Librarian.Model");
 const User = require("../Model/User.Model");
 const Book = require("../Model/Books.Model");
+const { mutipleMongoosetoObject } = require("../Util/mongoUtil");
 class borowingController {
   async addBorowing(req, res) {
     const book = req.body.book;
@@ -39,6 +40,7 @@ class borowingController {
         .json({ massage: "Ngày trả không được nhỏ hơn ngày hôm nay" });
     } else {
       const borowing = new borowingModel(req.body);
+      borowing.status = "0";
       const save = await borowing.save();
       if (req.body.book) {
         const newBook = await Book.findById(req.body.book);
@@ -57,6 +59,13 @@ class borowingController {
       }
       res.status(200).json({ massage: "Add thành công" });
     }
+  }
+  getapi(req, res, next) {
+    borowingModel.find({}).then((borowing) => {
+      res.json({
+        borowing: mutipleMongoosetoObject(borowing),
+      });
+    });
   }
 }
 

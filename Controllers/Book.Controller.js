@@ -1,6 +1,9 @@
 const bookModel = require("../Model/Books.Model");
 const cloudinary = require("cloudinary").v2;
 class BookController {
+  index(req, res) {
+    res.render("book");
+  }
   async getBookbyId(req, res, next) {
     const book = await bookModel
       .findById(req.params.idBook)
@@ -15,7 +18,7 @@ class BookController {
     const book = req.body;
     const img = req.file;
     if (
-      img == undefined ||
+      // img == undefined ||
       book.nameBook == "" ||
       book.categoryBook == "" ||
       book.author == "" ||

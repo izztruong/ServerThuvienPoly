@@ -1,6 +1,9 @@
 const user = require("../Model/User.Model");
 const { mutipleMongoosetoObject } = require("../Util/mongoUtil");
 class userController {
+  index(req,res) {
+    res.render("listuser")
+  }
   addUser(req, res, next) {
     const name = req.body.name;
     const sex = req.body.sex;

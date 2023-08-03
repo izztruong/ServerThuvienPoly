@@ -2,6 +2,12 @@ const librarian = require("../Model/Librarian.Model");
 const bcrypt = require("bcrypt");
 const { mutipleMongoosetoObject } = require("../Util/mongoUtil");
 class librarianController {
+  index(req,res) {
+    res.render("listLibrarian")
+  }
+  indexadd(req,res){
+    res.render("addLibrarian")
+  }
   Addlibrarian(req, res, next) {
     const name = req.body.name;
     const sex = req.body.sex;

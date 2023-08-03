@@ -7,15 +7,16 @@ const handlebar = require("express-handlebars");
 const Mongodb = require("./Mongodb/database");
 const router = require("./Routers/index");
 const PORT = process.env.PORT;
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
 app.use(express.json());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.engine(
   ".hbs",
   handlebar.engine({
     extname: "hbs",
     defaultLayout: "home",
     layoutsDir: "views/layouts/",
+    helpers: { sum: (a, b) => a + b },
   })
 );
 app.set("view engine", ".hbs");
