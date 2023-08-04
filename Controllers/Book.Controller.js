@@ -1,5 +1,6 @@
 const bookModel = require("../Model/Books.Model");
 const cloudinary = require("cloudinary").v2;
+
 class BookController {
   async getBookbyId(req, res, next) {
     const book = await bookModel
@@ -14,8 +15,14 @@ class BookController {
   async addBook(req, res, next) {
     const book = req.body;
     const img = req.file;
+    const publishingYear = req.body.publishingYear;
+    let publishingYeardate = new Date(publishingYear);
+    let today = new Date();
+    console.log("publishingYear" + publishingYeardate);
+    console.log("today" + today);
+
     if (
-      img == undefined ||
+      (img == undefined && book.image == "") ||
       book.nameBook == "" ||
       book.categoryBook == "" ||
       book.author == "" ||
@@ -31,8 +38,24 @@ class BookController {
       return res
         .status(500)
         .json({ message: "Các trường không được bỏ trống" });
+    } else if (!publishingYeardate || isNaN(publishingYeardate.getTime())) {
+      if (img) {
+        cloudinary.uploader.destroy(img.filename);
+      }
+      return res.status(500).json({ message: "publishingYear không hợp lệ" });
+    } else if (publishingYeardate > today) {
+      if (img) {
+        cloudinary.uploader.destroy(img.filename);
+      }
+      return res
+        .status(500)
+        .json({ message: "publishingYear không được lớn hơn ngày hôm nay" });
     }
-    book.image = img?.path;
+    book.loanCount = 0;
+    if (!img == undefined) {
+      book.image = img?.path;
+    }
+
     const items = new bookModel(book);
     try {
       console.log(items);
@@ -41,11 +64,6 @@ class BookController {
     } catch (error) {
       console.log(error);
     }
-  }
-
-  async listBook(req, res, next) {
-    const arrBook = await bookModel.find().populate("categoryBooks");
-    res.send(arrBook);
   }
 
   async deleteBook(req, res, next) {
@@ -58,27 +76,57 @@ class BookController {
   }
 
   async updateBook(req, res, next) {
-    const book = req.params.idBook;
+    const bookid = req.params.idBook;
+    const book = req.body;
+    const img = req.file;
+    const publishingYear = req.body.publishingYear;
+    let publishingYeardate = new Date(publishingYear);
+    let today = new Date();
+    console.log("publishingYear" + publishingYeardate);
+    console.log("today" + today);
+
     if (
-      (book.nameBook =
-        "" ||
-        book.categoryBook == "" ||
-        book.author == "" ||
-        book.publishingCompany == "" ||
-        book.publishingYear == "" ||
-        book.language == "" ||
-        book.quanity == "" ||
-        book.price == "")
+      (img == undefined && book.image == "") ||
+      book.nameBook == "" ||
+      book.categoryBook == "" ||
+      book.author == "" ||
+      book.publishingCompany == "" ||
+      book.publishingYear == "" ||
+      book.language == "" ||
+      book.quanity == "" ||
+      book.price == ""
     ) {
+      if (img) {
+        cloudinary.uploader.destroy(img.filename);
+      }
       return res
         .status(500)
         .json({ message: "Các trường không được bỏ trống" });
+    } else if (!publishingYeardate || isNaN(publishingYeardate.getTime())) {
+      if (img) {
+        cloudinary.uploader.destroy(img.filename);
+      }
+      return res.status(500).json({ message: "publishingYear không hợp lệ" });
+    } else if (publishingYeardate > today) {
+      if (img) {
+        cloudinary.uploader.destroy(img.filename);
+      }
+      return res
+        .status(500)
+        .json({ message: "publishingYear không được lớn hơn ngày hôm nay" });
     }
-    const updateBook = await bookModel.findByIdAndUpdate(book, req.body);
+    cloudinary.uploader.destroy(book.image);
+    if (!img == undefined) {
+      book.image = img?.path;
+    }
+    const updateBook = await bookModel.findOneAndUpdate(
+      { _id: bookid },
+      req.body
+    );
     if (!updateBook) {
       return res.status(404).json({ message: "Book not found" });
     }
-    res.status(200).json(req.body);
+    res.status(200).json(book);
   }
 
   // lọc theo thể loại
@@ -90,5 +138,31 @@ class BookController {
     }
     res.status(200).json(books);
   }
+
+  async listBook(req, res, next) {
+    try {
+      const arrBook = await bookModel.find().populate("categoryBook");
+      res.send(arrBook);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async listBook10(req, res, next) {
+    try {
+      const arrBook = await bookModel
+        .find()
+        .populate("categoryBook")
+        .sort({ loanCount: -1 })
+        .limit(10);
+      res.send(arrBook);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }
 module.exports = new BookController();
+// exports.top10 = async (req, res, next) => {
+//   const arrBook = await bookModel.find();
+//   res.send(arrBook);
+// };

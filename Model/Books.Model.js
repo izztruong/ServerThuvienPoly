@@ -37,6 +37,9 @@ const Book = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    loanCount: {
+      type: Number,
+    },
   },
   { timestamps: true }
 );
