@@ -22,68 +22,152 @@
       crossorigin="anonymous"
     ></script>
   </head>
-  <div style="display: flex;">
-    <div class="drawer drawer-left drawer-static show" style="padding: 20px;">
-      <div class="drawer-content drawer-content-scrollable">
-        <div class="drawer-header">
-          <img
-            src="https://firebasestorage.googleapis.com/v0/b/thuvienpoly.appspot.com/o/Screenshot_1%205.png?alt=media&token=2201c576-27a3-4d03-a0d5-6d488584d70c"
-            alt="fail"
-          />
-        </div>
-        <div class="drawer-body">
-          <div style="display: flex;margin-top: 20px;">
+  <div class="container-fluid">
+    <div class="row flex-nowrap">
+      <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark sidebar">
+        <div
+          class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100"
+        >
+          <a
+            href="/"
+            class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none"
+          >
             <img
-              src="https://firebasestorage.googleapis.com/v0/b/thuvienpoly.appspot.com/o/books%201.png?alt=media&token=d0dcf433-76f7-4b75-915e-357b6754d338"
-              alt="fail"
+              width="200px"
+              src="https://firebasestorage.googleapis.com/v0/b/thuvienpoly.appspot.com/o/TH%C6%AF%20VI%E1%BB%86N%20POLY.png?alt=media&token=fde7becf-b1ee-416c-866a-56b46e1bee18"
+              alt="Fail"
             />
-            <h5 style="margin-left: 10px;">Quản Lý Sách</h5>
-          </div>
-          <a class="dropdown-item" href="/Book/listBook">Danh Sách Sách</a>
-          <a class="dropdown-item" href="">Danh Sách Thể Loại</a>
-          <div style="display: flex;margin-top: 20px;">
-            <img
-              src="https://firebasestorage.googleapis.com/v0/b/thuvienpoly.appspot.com/o/users-alt%20(2)%201.png?alt=media&token=e4a38d3a-47f3-42a1-ad89-56a47bfb977d"
-              alt="fail"
-            />
-            <h5 style="margin-left: 10px;">Quản Lý User</h5>
-          </div>
-          <a class="dropdown-item" href="">Danh Sách Khách Hàng</a>
-          <a class="dropdown-item" href="/Librarian/listLibrarian">Danh Sách Nhân Viên</a>
-          <div style="display: flex;margin-top: 20px;">
-            <img
-              src="https://firebasestorage.googleapis.com/v0/b/thuvienpoly.appspot.com/o/file-invoice%20(1)%201.png?alt=media&token=b3f068c8-88fd-41fe-9907-cc4130c58c61"
-              alt="fail"
-            />
-            <h5 style="margin-left: 10px;">Quản Lý Phiếu Mượn</h5>
-          </div>
-          <a class="dropdown-item" href="">Danh Sách Phiếu Mượn</a>
-          <div style="display: flex;margin-top: 20px;">
-            <img
-              src="https://firebasestorage.googleapis.com/v0/b/thuvienpoly.appspot.com/o/chart-histogram%20(1)%201.png?alt=media&token=7fb2622b-33eb-44cf-aeff-93b7bee89d59"
-              alt="fail"
-            />
-            <h5 style="margin-left: 10px;">Thống Kê</h5>
-          </div>
-          <a class="dropdown-item" href="">Tốp Sách Thêu Nhiều</a>
-          <a class="dropdown-item" href="">Tổng Doanh Thu</a>
+          </a>
+          <ul
+            class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
+            id="menu"
+          >
+            <li>
+              <a
+                href="#submenu1"
+                data-bs-toggle="collapse"
+                class="nav-link px-0 align-middle"
+              >
+                <img
+                  src="https://firebasestorage.googleapis.com/v0/b/thuvienpoly.appspot.com/o/books%201.png?alt=media&token=d0dcf433-76f7-4b75-915e-357b6754d338"
+                  alt="fail"
+                />
+                <span class="ms-1 d-none d-sm-inline">QUẢN LÝ SÁCH</span>
+              </a>
+              <ul
+                class="collapse show nav flex-column ms-1"
+                id="submenu1"
+                data-bs-parent="#menu"
+              >
+                <li class="w-100">
+                  <a href="#" class="nav-link px-0">
+                    <span class="d-none d-sm-inline">Danh Sách Sách</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#" class="nav-link px-0">
+                    <span class="d-none d-sm-inline">Danh Sách Thể Loại</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a
+                href="#submenu2"
+                data-bs-toggle="collapse"
+                class="nav-link px-0 align-middle"
+              >
+                <img
+                  src="https://firebasestorage.googleapis.com/v0/b/thuvienpoly.appspot.com/o/users-alt%20(2)%201.png?alt=media&token=e4a38d3a-47f3-42a1-ad89-56a47bfb977d"
+                  alt="fail"
+                />
+                <span class="ms-1 d-none d-sm-inline">QUẢN LÝ USER</span></a>
+              <ul
+                class="collapse nav flex-column ms-1"
+                id="submenu2"
+                data-bs-parent="#menu"
+              >
+                <li class="w-100">
+                  <a href="/Librarian/listLibrarian" class="nav-link px-0">
+                    <span class="d-none d-sm-inline">Danh Sách Nhân Viên</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="" class="nav-link px-0">
+                    <span class="d-none d-sm-inline">Danh Sách Khách Hàng</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a
+                href="#submenu3"
+                data-bs-toggle="collapse"
+                class="nav-link px-0 align-middle"
+              >
+                <img
+                  src="https://firebasestorage.googleapis.com/v0/b/thuvienpoly.appspot.com/o/file-invoice%20(1)%201.png?alt=media&token=b3f068c8-88fd-41fe-9907-cc4130c58c61"
+                  alt="fail"
+                />
+                <span class="ms-1 d-none d-sm-inline">PHIẾU MƯỢN</span>
+              </a>
+              <ul
+                class="collapse nav flex-column ms-1"
+                id="submenu3"
+                data-bs-parent="#menu"
+              >
+                <li class="w-100">
+                  <a href="#" class="nav-link px-0">
+                    <span class="d-none d-sm-inline">Danh Sách Phiếu Mượn</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a
+                href="#submenu4"
+                data-bs-toggle="collapse"
+                class="nav-link px-0 align-middle"
+              >
+                <img
+                  src="https://firebasestorage.googleapis.com/v0/b/thuvienpoly.appspot.com/o/chart-histogram%20(1)%201.png?alt=media&token=7fb2622b-33eb-44cf-aeff-93b7bee89d59"
+                  alt="fail"
+                />
+                <span class="ms-1 d-none d-sm-inline">THỐNG KÊ</span>
+              </a>
+              <ul
+                class="collapse nav flex-column ms-1"
+                id="submenu"
+                data-bs-parent="#menu"
+              >
+                <li class="w-100">
+                  <a href="#" class="nav-link px-0">
+                    <span class="d-none d-sm-inline">Top 10 Sách Mượn Nhiều Nhất</span>
+                    </a>
+                </li>
+                 <li class="w-100">
+                  <a href="#" class="nav-link px-0">
+                    <span class="d-none d-sm-inline">Doanh Thu</span>
+                    </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
 
         </div>
       </div>
+      <div class="col py-3">
+        <nav class="navbar navbar-light bg-light">
+          <span class="navbar-brand mb-0 h1">Navbar</span>
+        </nav>
+        <body>
+          <div style="margin: 20px;">
+            {{{body}}}
+          </div>
+        </body>
+      </div>
     </div>
-    <div class="col-sm-10">
-      <div
-        style="display: flex;height: 70px; background-color: rgb(231, 248, 248);margin: 20px;align-items: center;padding: 20px;"
-      >
-        <text style="font-size: 24dp;">
-          BOOK
-        </text></div>
-      <body>
-        <div style="margin: 20px;">
-          {{{body}}}
-        </div>
-      </body>
-    </div>
+
   </div>
 
 </html>

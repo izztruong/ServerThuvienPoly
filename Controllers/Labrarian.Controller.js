@@ -3,7 +3,11 @@ const bcrypt = require("bcrypt");
 const { mutipleMongoosetoObject } = require("../Util/mongoUtil");
 class librarianController {
   index(req,res) {
-    res.render("listLibrarian")
+    librarian.find({}).then((lb) => {
+      res.render("listLibrarian",{
+        lb:mutipleMongoosetoObject(lb),
+      })
+    })
   }
   indexadd(req,res){
     res.render("addLibrarian")
@@ -190,6 +194,14 @@ class librarianController {
     } catch (error) {
       res.status(500).json({ error: err });
     }
+  }
+  async deleteLibrarian(req, res, next) {
+    const idLibrarian = req.params.idLibrarian;
+    const deleteLibrarian = await librarian.findByIdAndDelete(idLibrarian);
+    if (!deleteLibrarian) {
+      return res.status(404).json({ message: "Librarian not found" });
+    }
+    res.json("delete success");
   }
   getApi(req, res) {
     librarian.find().then((librarian) => {

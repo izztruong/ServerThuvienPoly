@@ -1,3 +1,119 @@
-<text style="font-size: 20px;">
-    Thêm Thành Viên
-</text>
+<div class="container">
+  <h2>Thêm Thành Viên</h2>
+  <form
+    method="POST"
+    action="/Librarian/addLibrarian"
+    autocomplete="off"
+    enctype="multipart/form-data"
+    style="margin-top: 20px;"
+  >
+    <div class="form-floating mb-3">
+      <label for="floatingInput">Name: </label>
+      <input
+        type="text"
+        class="form-control"
+        id="floatingInput"
+        placeholder="Enter The Name: "
+        style="border-radius: 10px;border-color: #FC6011;"
+      />
+
+    </div>
+    <div class="form-floating mb-3">
+      <label for="floatingInput">Sex: </label>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="flexRadioDefault"
+          id="flexRadioDefault1"
+        />
+        <label class="form-check-label" for="flexRadioDefault1">
+          MALE
+        </label>
+      </div>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="flexRadioDefault"
+          id="flexRadioDefault2"
+          checked
+        />
+        <label class="form-check-label" for="flexRadioDefault2">
+          FEMALE
+        </label>
+      </div>
+
+    </div>
+    <div class="form-floating mb-3">
+      <label for="floatingInput">Birthday: </label>
+      <input
+        type="text"
+        class="form-control"
+        id="floatingInput"
+        placeholder="Enter The Birthday: "
+        style="border-radius: 10px;border-color: #FC6011;"
+      />
+
+    </div>
+    <div class="form-floating mb-3">
+      <label for="floatingInput">Address: </label>
+      <input
+        type="text"
+        class="form-control"
+        id="floatingInput"
+        placeholder="Enter The Address: "
+        style="border-radius: 10px;border-color: #FC6011;"
+      />
+
+    </div>
+    <div class="form-floating mb-3">
+      <label for="floatingInput">Phone: </label>
+      <input
+        type="phone"
+        class="form-control"
+        id="floatingInput"
+        placeholder="Enter The Phone"
+        style="border-radius: 10px;border-color: #FC6011;"
+      />
+
+    </div>
+    <div class="form-floating mb-3">
+      <label for="floatingInput">Email: </label>
+      <input
+        type="email"
+        class="form-control"
+        id="floatingInput"
+        placeholder="name@example.com"
+        style="border-radius: 10px;border-color: #FC6011;"
+      />
+
+    </div>
+    <div class="form-floating mb-3">
+      <label for="floatingInput">Day Start Word: </label>
+      <input
+        type="text"
+        class="form-control"
+        id="floatingInput"
+        placeholder="Enter The Day Start Word: "
+        style="border-radius: 10px;border-color: #FC6011;"
+      />
+
+    </div>
+    <div class="form-floating">
+      <label for="floatingPassword">Password</label>
+      <input
+        type="password"
+        class="form-control"
+        id="floatingPassword"
+        placeholder="Enter The Password: "
+        style="border-radius: 10px;border-color: #FC6011;"
+      />
+    </div>
+    <button
+      type="button"
+      style="background-color: #FC6011;font-size: 24px;color: white;border-color: #FC6011;margin-top: 20px;"
+      class="btn-lg btn-block"
+    >ADD LIBRARIAN</button>
+  </form>
+</div>

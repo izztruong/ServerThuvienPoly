@@ -12,32 +12,83 @@
     <table class="table">
       <thead>
         <tr>
-          <th scope="col">#</th>
-          <th scope="col">First</th>
-          <th scope="col">Last</th>
-          <th scope="col">Handle</th>
+          <th scope="col">STT</th>
+          <th scope="col">Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Birthday</th>
+          <th scope="col">Sex</th>
+          <th scope="col">Address</th>
+          <th scope="col">Action</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-        </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <th scope="row">3</th>
-          <td>Larry</td>
-          <td>the Bird</td>
-          <td>@twitter</td>
-        </tr>
+        {{#each lb}}
+          <tr>
+            <th>{{sum @index 1}}</th>
+            <td>{{lb.name}}</td>
+            <td>{{lb.email}}</td>
+            <td>{{lb.birthday}}</td>
+            <td>{{lb.sex}}</td>
+            <td>{{lb.address}}</td>
+            <td><div class="dropdown show">
+                <a
+                  class="dropdown-toggle"
+                  href="#"
+                  role="button"
+                  id="dropdownMenuLink"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                </a>
+
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                  <a class="dropdown-item btn btn-danger" type="button" data-toggle="modal" data-target="#delete-User-model"
+            data-id="{{this._id}}">DELETE</a>
+                  <a class="dropdown-item btn btn-primary" href="#">EDIT</a>
+                  <a class="dropdown-item btn btn-primary" href="#">DETAIL</a>
+                </div>
+              </div></td>
+          </tr>
+        {{/each}}
       </tbody>
     </table>
   </div>
 </div>
+
+<div id="delete-User-model" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Thông Báo</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Bạn Có Chắc Là Muốn Xóa Nó Không ?</p>
+          <p>Khi Xóa Dữ Liệu Sẽ Không Khôi Phục Được !</p>
+        </div>
+        <div class="modal-footer">
+          <button id="btn-delete-user" type="button" class="btn btn-danger">DELETE</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <form name="from-delete" method="POST"></form>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var idsp;
+      var deletefrom = document.forms['from-delete']
+      $('#delete-User-model').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        idsp = button.data('id');
+      });
+      var btnDelete = document.getElementById('btn-delete-user')
+      btnDelete.onclick = function () {
+        deletefrom.action = idsp + '?_method=DELETE';
+        deletefrom.submit();
+      }
+    })
+  </script>
