@@ -34,6 +34,12 @@ const Librarian = new mongoose.Schema(
       type: String,
       required: true,
     },
+    borowing: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "BorowingSlip",
+      },
+    ],
   },
   { timestamps: true }
 );

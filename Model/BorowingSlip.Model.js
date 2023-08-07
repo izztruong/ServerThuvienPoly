@@ -1,15 +1,15 @@
 const  mongoose  = require("mongoose");
 
 const BorowingSlip = new mongoose.Schema({
-    borowwingSlipId: {
-        type: String,
-        required: true
+    book : {
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'Books'
     },
-    librarianId: {
+    librarian: {
         type: mongoose.Schema.Types.ObjectId,
         ref:'librarian'
     },
-    userId: {
+    user: {
         type: mongoose.Schema.Types.ObjectId,
         ref:'User'
     },
@@ -19,17 +19,12 @@ const BorowingSlip = new mongoose.Schema({
     dateEnd: {
         type: String,
     },
-    dateActualEnd: {
-        type: String
-    },
     status: {
         type: String,
     },
     price: {
         type:Number
     }
-
-
 },{timestamps:true})
     
 module.exports = new mongoose.model("BorowingSlip", BorowingSlip);
