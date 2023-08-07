@@ -1,4 +1,5 @@
 const bookModel = require("../Model/Books.Model");
+const { mutipleMongoosetoObject } = require("../Util/mongoUtil");
 const cloudinary = require("cloudinary").v2;
 class BookController {
   index(req, res) {
@@ -47,8 +48,11 @@ class BookController {
   }
 
   async listBook(req, res, next) {
-    const arrBook = await bookModel.find().populate("categoryBooks");
-    res.send(arrBook);
+    bookModel.find().then((book) => {
+      res.json({
+        book: mutipleMongoosetoObject(book),
+      });
+    });
   }
 
   async deleteBook(req, res, next) {

@@ -1,8 +1,8 @@
 <div class="container">
-  <h2>Thêm Thành Viên</h2>
+  <h2>Thêm User</h2>
   <form
     method="POST"
-    action="/Librarian/addLibrarian"
+    action="/User/addUser"
     autocomplete="off"
     enctype="multipart/form-data"
     style="margin-top: 20px;"
@@ -14,8 +14,8 @@
         class="form-control"
         id="floatingInput"
         placeholder="Enter The Name: "
-        name="name"
         style="border-radius: 10px;border-color: #FC6011;"
+        name="name"
       />
 
     </div>
@@ -44,26 +44,13 @@
           FEMALE
         </label>
       </div>
-
-    </div>
-    <div class="form-floating mb-3">
-      <label for="floatingInput">Birthday: </label>
-      <input
-        type="text"
-        class="form-control"
-        name="birthday"
-        id="floatingInput"
-        placeholder="Enter The Birthday: "
-        style="border-radius: 10px;border-color: #FC6011;"
-      />
-
     </div>
     <div class="form-floating mb-3">
       <label for="floatingInput">Address: </label>
       <input
         type="text"
-        class="form-control"
         name="address"
+        class="form-control"
         id="floatingInput"
         placeholder="Enter The Address: "
         style="border-radius: 10px;border-color: #FC6011;"
@@ -74,9 +61,9 @@
       <label for="floatingInput">Phone: </label>
       <input
         type="phone"
+        name="phone"
         class="form-control"
         id="floatingInput"
-        name="phone"
         placeholder="Enter The Phone"
         style="border-radius: 10px;border-color: #FC6011;"
       />
@@ -86,36 +73,13 @@
       <label for="floatingInput">Email: </label>
       <input
         type="email"
+        name="email"
         class="form-control"
         id="floatingInput"
-        name="email"
         placeholder="name@example.com"
         style="border-radius: 10px;border-color: #FC6011;"
       />
 
-    </div>
-    <div class="form-floating mb-3">
-      <label for="floatingInput">Day Start Word: </label>
-      <input
-        type="text"
-        class="form-control"
-        id="floatingInput"
-        placeholder="Enter The Day Start Word: "
-        style="border-radius: 10px;border-color: #FC6011;"
-        name="dateWork"
-      />
-
-    </div>
-    <div class="form-floating">
-      <label for="floatingPassword">Password</label>
-      <input
-        type="password"
-        class="form-control"
-        id="floatingPassword"
-        placeholder="Enter The Password: "
-        style="border-radius: 10px;border-color: #FC6011;"
-        name="password"
-      />
     </div>
     <div class="mb-6">
       <button
