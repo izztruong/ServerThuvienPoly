@@ -1,6 +1,6 @@
 const bookModel = require("../Model/Books.Model");
 const cloudinary = require("cloudinary").v2;
-
+const { mutipleMongoosetoObject } = require("../Util/mongoUtil");
 class BookController {
   async getBookbyId(req, res, next) {
     const book = await bookModel
@@ -140,12 +140,11 @@ class BookController {
   }
 
   async listBook(req, res, next) {
-    try {
-      const arrBook = await bookModel.find().populate("categoryBook");
-      res.send(arrBook);
-    } catch (error) {
-      console.log(error);
-    }
+   const arrBook = await bookModel.find().then((book) => {
+      res.send({
+        book: mutipleMongoosetoObject(book),
+      });
+    });
   }
 
   async listBook10(req, res, next) {
