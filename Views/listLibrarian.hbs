@@ -8,60 +8,58 @@
       style="background-color: #FC6011;color: white;margin-left: 1000px;"
     >Thêm Thành Viên</a>
   </div>
-  <div style="margin-top: 20px;">
-    <table class="table">
-      <thead>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">STT</th>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Birthday</th>
+        <th scope="col">Sex</th>
+        <th scope="col">Address</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each lb}}
         <tr>
-          <th scope="col">STT</th>
-          <th scope="col">Name</th>
-          <th scope="col">Email</th>
-          <th scope="col">Birthday</th>
-          <th scope="col">Sex</th>
-          <th scope="col">Address</th>
-          <th scope="col">Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        {{#each lb}}
-          <tr>
-            <th>{{sum @index 1}}</th>
-            <td>{{lb.name}}</td>
-            <td>{{lb.email}}</td>
-            <td>{{lb.birthday}}</td>
-            <td>{{lb.sex}}</td>
-            <td>{{lb.address}}</td>
-            <td><div class="dropdown show">
+          <th>{{sum @index 1}}</th>
+          <td>{{this.name}}</td>
+          <td>{{this.email}}</td>
+          <td>{{this.birthday}}</td>
+          <td>{{this.sex}}</td>
+          <td>{{this.address}}</td>
+          <td><div class="dropdown show">
+              <a
+                class="dropdown-toggle"
+                href="#"
+                role="button"
+                id="dropdownMenuLink"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+              </a>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                 <a
-                  class="dropdown-toggle"
-                  href="#"
-                  role="button"
-                  id="dropdownMenuLink"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
+                  class="btn btn-danger"
+                  data-toggle="modal"
+                  data-target="#delete-User-model"
+                  data-id="{{this._id}}"
                 >
+                  DELETE
                 </a>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                  <a
-                    class="dropdown-item btn btn-danger"
-                    type="button"
-                    data-toggle="modal"
-                    data-target="#delete-User-model"
-                    data-id="{{this._id}}"
-                  >DELETE</a>
-                  <a class="dropdown-item btn btn-primary" href="#">EDIT</a>
-                  <a class="dropdown-item btn btn-primary" href="#">DETAIL</a>
-                </div>
-              </div></td>
-          </tr>
-        {{/each}}
-      </tbody>
-    </table>
-  </div>
+                <a class="btn btn-primary" href="/Librarian/{{this._id}}/editLibrarian">EDIT</a>
+              </div>
+            </div></td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
 </div>
 
-<div id="delete-User-model" class="modal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
+<div id="delete-User-model" class="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Thông Báo</h5>
@@ -95,10 +93,17 @@
 </div>
 <form name="from-delete" method="POST"></form>
 <script>
-  document.addEventListener('DOMContentLoaded', function () { var idsp; var
-  deletefrom = document.forms['from-delete']
-  $('#delete-User-model').on('show.bs.modal', function (event) { var button =
-  $(event.relatedTarget); idsp = button.data('id'); }); var btnDelete =
-  document.getElementById('btn-delete-user') btnDelete.onclick = function () {
-  deletefrom.action = idsp + '?_method=DELETE'; deletefrom.submit(); } })
+  document.addEventListener('DOMContentLoaded', function () {
+    var idsp;
+    var deleteFrom = document.forms['from-delete']
+    $('#delete-User-model').on('show.bs.modal', function (even)  {
+      var btn_delete = $(even.relatedTarget)
+      idsp = btn_delete.data("id")
+    });
+    var btn = document.getElementById('btn-delete-user')
+    btn.onclick = function () {
+      deleteFrom.action = idsp + '?_method=DELETE';
+      deleteFrom.submit();
+    }
+  })
 </script>

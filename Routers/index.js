@@ -6,8 +6,8 @@ const CategoryBookrouter = require('./CategoryBook.Router')
 const BorowingSlip = require("./BorowingSlip.Router");
 
 function routes(app) {
-  app.use("/Book", book);
   app.use("/",admin)
+  app.use("/Book", book);
   app.use("/User",user)
   app.use("/Librarian",librarian)
   app.use("/categoryBook", CategoryBookrouter);

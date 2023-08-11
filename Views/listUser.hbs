@@ -1,13 +1,4 @@
 <div>
-  <div
-    style="display: flex;align-items:center; height: 50px;background-color: rgb(254, 239, 239);"
-  >
-    <a
-      href="/User/addUser"
-      class="btn"
-      style="background-color: #FC6011;color: white;margin-left: 1000px;"
-    >Thêm Thành Viên</a>
-  </div>
   <div style="margin-top: 20px;">
     <table class="table">
       <thead>
@@ -15,24 +6,20 @@
           <th scope="col">STT</th>
           <th scope="col">Name</th>
           <th scope="col">Email</th>
-          <th scope="col">Birthday</th>
+          <th scope="col">Phone</th>
           <th scope="col">Sex</th>
           <th scope="col">Address</th>
-          <th scope="col">Action</th>
         </tr>
       </thead>
       <tbody>
         {{#each user}}
           <tr>
             <th>{{sum @index 1}}</th>
-            <td>{{user.name}}</td>
-            <td>{{user.email}}</td>
-            <td>{{user.phone}}</td>
-            <td>{{user.sex}}</td>
-            <td>{{user.address}}</td>
-            <td>
-              <a class="btn btn-primary" href="#">DETAIL</a>
-            </td>
+            <td>{{this.name}}</td>
+            <td>{{this.email}}</td>
+            <td>{{this.phone}}</td>
+            <td>{{this.sex}}</td>
+            <td>{{this.address}}</td>
           </tr>
         {{/each}}
       </tbody>

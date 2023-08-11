@@ -1,0 +1,32 @@
+<div>
+  <div style="margin-top: 20px;">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">STT</th>
+          <th scope="col">Book</th>
+          <th scope="col">Librarian</th>
+          <th scope="col">User</th>
+          <th scope="col">Start</th>
+          <th scope="col">End</th>
+          <th scope="col">Status</th>
+          <th scope="col">Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each br}}
+          <tr>
+            <th>{{sum @index 1}}</th>
+            <td>{{this.book}}</td>
+            <td>{{this.librarian}}</td>
+            <td>{{this.user}}</td>
+            <td>{{this.dateStart}}</td>
+            <td>{{this.dateEnd}}</td>
+            <td>{{this.status}}</td>
+            <td>{{this.price}}</td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</div>

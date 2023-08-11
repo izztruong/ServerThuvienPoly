@@ -5,22 +5,21 @@
     action="/Librarian/addLibrarian"
     autocomplete="off"
     enctype="multipart/form-data"
-    style="margin-top: 20px;"
   >
     <div class="form-floating mb-3">
-      <label for="floatingInput">Name: </label>
+      <label for="name">Name: </label>
       <input
         type="text"
         class="form-control"
-        id="floatingInput"
+        required
         placeholder="Enter The Name: "
         name="name"
-        style="border-radius: 10px;border-color: #FC6011;"
+        style="border-color: #FC6011;"
       />
 
     </div>
     <div class="form-floating mb-3">
-      <label for="floatingInput">Sex: </label>
+      <label for="sex">Sex: </label>
       <div class="form-check">
         <input
           class="form-check-input"
@@ -47,35 +46,34 @@
 
     </div>
     <div class="form-floating mb-3">
-      <label for="floatingInput">Birthday: </label>
+      <label for="birthday">Birthday: </label>
       <input
         type="text"
         class="form-control"
         name="birthday"
-        id="floatingInput"
+        required
         placeholder="Enter The Birthday: "
         style="border-radius: 10px;border-color: #FC6011;"
       />
-
     </div>
     <div class="form-floating mb-3">
-      <label for="floatingInput">Address: </label>
+      <label for="address">Address: </label>
       <input
         type="text"
         class="form-control"
         name="address"
-        id="floatingInput"
+        required
         placeholder="Enter The Address: "
         style="border-radius: 10px;border-color: #FC6011;"
       />
 
     </div>
     <div class="form-floating mb-3">
-      <label for="floatingInput">Phone: </label>
+      <label for="phone">Phone: </label>
       <input
-        type="phone"
+        type="text"
         class="form-control"
-        id="floatingInput"
+        required
         name="phone"
         placeholder="Enter The Phone"
         style="border-radius: 10px;border-color: #FC6011;"
@@ -83,11 +81,11 @@
 
     </div>
     <div class="form-floating mb-3">
-      <label for="floatingInput">Email: </label>
+      <label for="email">Email: </label>
       <input
-        type="email"
+        type="text"
         class="form-control"
-        id="floatingInput"
+        required
         name="email"
         placeholder="name@example.com"
         style="border-radius: 10px;border-color: #FC6011;"
@@ -95,11 +93,11 @@
 
     </div>
     <div class="form-floating mb-3">
-      <label for="floatingInput">Day Start Word: </label>
+      <label for="start">Day Start Word: </label>
       <input
         type="text"
         class="form-control"
-        id="floatingInput"
+        required
         placeholder="Enter The Day Start Word: "
         style="border-radius: 10px;border-color: #FC6011;"
         name="dateWork"
@@ -107,11 +105,11 @@
 
     </div>
     <div class="form-floating">
-      <label for="floatingPassword">Password</label>
+      <label for="password">Password</label>
       <input
         type="password"
         class="form-control"
-        id="floatingPassword"
+        required
         placeholder="Enter The Password: "
         style="border-radius: 10px;border-color: #FC6011;"
         name="password"

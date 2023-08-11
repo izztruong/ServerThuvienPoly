@@ -13,7 +13,7 @@ class librarianController {
   indexadd(req, res) {
     res.render("addLibrarian");
   }
-  AddlibrarianAPI(req, res, next) {
+  Addlibrarian(req,res){
     const name = req.body.name;
     const sex = req.body.sex;
     const birthday = req.body.birthday;
@@ -22,13 +22,9 @@ class librarianController {
     const phone = req.body.phone;
     const dateWork = req.body.dateWork;
     const password = req.body.password;
-
     let bithdayDate = new Date(birthday);
     let dateWorkday = new Date(dateWork);
     let today = new Date();
-    console.log("bithday: " + bithdayDate);
-    console.log("today" + today);
-    console.log("date work" + dateWorkday);
     if (
       name == "" ||
       sex == "" ||
@@ -39,52 +35,48 @@ class librarianController {
       dateWork == "" ||
       password == ""
     ) {
-      res
-        .status(500)
-        .json({ message: "Các trường dữ liệu không được để trống" });
+      notifier.notify({
+        message: 'Các Trường Không Được Để Trống'
+      });
     } else if (!/^[a-zA-Z]+$/.test(name)) {
-      res.json({
-        status: "FAILED",
-        message: "Name sai định dạng",
+      notifier.notify({
+        message: 'Name sai định dạng'
       });
     } else if (
-      !/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i.test(
+      !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(
         email
       )
     ) {
-      res.json({
-        status: "FAILED",
-        message: "Email không hợp lệ",
+      notifier.notify({
+        message: 'Email sai định dạng'
       });
     } else if (!/(((\+|)84)|0)(3|5|7|8|9)+([0-9]{8})\b/.test(phone)) {
-      res.json({
-        status: "FAILED",
-        message: "Phone không hợp lệ",
+      notifier.notify({
+        message: 'Phone sai định dạng'
       });
     } else if (!bithdayDate || isNaN(bithdayDate.getTime())) {
-      res.json({
-        status: "FAILED",
-        message: "Bithday không hợp lệ",
+      notifier.notify({
+        message: 'Bithday sai định dạng'
       });
     } else if (bithdayDate > today) {
-      res.json({
-        status: "FAILED",
-        message: "Bithday không được lớn hơn ngày hôm nay",
+      notifier.notify({
+        message: 'Bithday không được lớn hơn ngày hôm nay'
       });
+      
     } else if (!dateWorkday || isNaN(dateWorkday.getTime())) {
-      res.json({
-        status: "FAILED",
-        message: "DateWork không hợp lệ",
+      notifier.notify({
+        message: 'DateWord không hợp lệ'
       });
     } else if (dateWorkday > today) {
-      res.json({
-        status: "FAILED",
-        message: "DateWork không được lớn hơn ngày hôm nay",
+      notifier.notify({
+        message: 'DateWork không được lớn hơn ngày hôm nay'
       });
     } else {
       librarian.findOne({ email: email }).then((data) => {
         if (data) {
-          res.status(400).json({ message: "Email đã tồn tại" });
+          notifier.notify({
+            message: 'Email đã tồn tại'
+          });
         } else {
           bcrypt.hash(password, 10, (error, handlepass) => {
             if (error) {
@@ -141,32 +133,7 @@ class librarianController {
         console.log(err);
       });
   }
-
-  UpdateLibrarianAPI(req, res) {
-    librarian
-      .updateOne(
-        {
-          _id: req.params.id,
-        },
-        {
-          name: req.body.name,
-          sex: req.body.sex,
-          birthday: req.body.birthday,
-          address: req.body.address,
-          phone: req.body.phone,
-          email: req.body.email,
-          dateWork: req.body.dateWork,
-        }
-      )
-      .then(() => {
-        res.status(200).json({ message: "update thành công" });
-      })
-      .catch((err) => {
-        res.status(400).json({ error: err });
-        console.log(err);
-      });
-  }
-
+  
   async changePasswordAPI(req, res) {
     const password = req.body.password;
     const newpassword = req.body.newpassword;
@@ -203,13 +170,12 @@ class librarianController {
       res.status(500).json({ error: err });
     }
   }
-  async deleteLibrarian(req, res, next) {
-    const idLibrarian = req.params.idLibrarian;
-    const deleteLibrarian = await librarian.findByIdAndDelete(idLibrarian);
-    if (!deleteLibrarian) {
-      return res.status(404).json({ message: "Librarian not found" });
-    }
-    res.json("delete success");
+  deleteLibrarian(req, res, next) {
+    librarian.deleteOne({ _id: req.params.id })
+      .then(() => {
+        res.redirect("back");
+      })
+      .catch(next);
   }
   getApi(req, res) {
     librarian.find().then((librarian) => {
@@ -218,100 +184,6 @@ class librarianController {
       });
     });
   }
-  Addlibrarian(req,res){
-    const name = req.body.name;
-    const sex = req.body.sex;
-    const birthday = req.body.birthday;
-    const address = req.body.address;
-    const email = req.body.email;
-    const phone = req.body.phone;
-    const dateWork = req.body.dateWork;
-    const password = req.body.password;
-
-    let bithdayDate = new Date(birthday);
-    let dateWorkday = new Date(dateWork);
-    let today = new Date();
-    if (
-      name == "" ||
-      sex == "" ||
-      birthday == "" ||
-      address == "" ||
-      email == "" ||
-      phone == "" ||
-      dateWork == "" ||
-      password == ""
-    ) {
-      notifier.notify({
-        message: 'Các Trường Không Được Để Trống'
-      });
-    } else if (!/^[a-zA-Z]+$/.test(name)) {
-      notifier.notify({
-        message: 'Name sai định dạng'
-      });
-    } else if (
-      !/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i.test(
-        email
-      )
-    ) {
-      notifier.notify({
-        message: 'Email sai định dạng'
-      });
-    } else if (!/(((\+|)84)|0)(3|5|7|8|9)+([0-9]{8})\b/.test(phone)) {
-      notifier.notify({
-        message: 'Phone sai định dạng'
-      });
-    } else if (!bithdayDate || isNaN(bithdayDate.getTime())) {
-      notifier.notify({
-        message: 'Bithday sai định dạng'
-      });
-    } else if (bithdayDate > today) {
-      notifier.notify({
-        message: 'Bithday không được lớn hơn ngày hôm nay'
-      });
-      
-    } else if (!dateWorkday || isNaN(dateWorkday.getTime())) {
-      notifier.notify({
-        message: 'DateWord không hợp lệ'
-      });
-      
-    } else if (dateWorkday > today) {
-      notifier.notify({
-        message: 'DateWork không được lớn hơn ngày hôm nay'
-      });
-    } else {
-      librarian.findOne({ email: email }).then((data) => {
-        if (data) {
-          notifier.notify({
-            message: 'Email đã tồn tại'
-          });
-        } else {
-          bcrypt.hash(password, 10, (error, handlepass) => {
-            if (error) {
-              return res.status(500).json({ error: error });
-            } else {
-              return librarian
-                .create({
-                  name: name,
-                  sex: sex,
-                  birthday: birthday,
-                  address: address,
-                  phone: phone,
-                  email: email,
-                  dateWork: dateWork,
-                  password: handlepass,
-                })
-                .then((data) => {
-                  res.status(200).json(data);
-                })
-                .catch((err) => {
-                  res.status(500).json({ error: err });
-                  console.log(err);
-                });
-            }
-          });
-        }
-      });
-    }
-  }
+ 
 }
 module.exports = new librarianController();

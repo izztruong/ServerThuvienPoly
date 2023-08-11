@@ -2,7 +2,7 @@ const borowingModel = require("../Model/BorowingSlip.Model");
 const Librarian = require("../Model/Librarian.Model");
 const User = require("../Model/User.Model");
 const Book = require("../Model/Books.Model");
-const { mutipleMongoosetoObject } = require("../Util/mongoUtil");
+const { mutipleMongoosetoObject} = require("../Util/mongoUtil");
 class borowingController {
   async addBorowing(req, res) {
     const book = req.body.book;
@@ -12,8 +12,8 @@ class borowingController {
     const dateEnd = req.body.dateEnd;
     const price = req.body.price;
     const bookQuantity = await Book.findById(book);
-    let dayStart = new Date(dateStart);
-    let dayEnd = new Date(dateEnd);
+    let dayStart = new Date(dateStart.getTime());
+    let dayEnd = new Date(dateEnd.getTime());
     let today = new Date();
     if (
       book == "" ||
@@ -26,13 +26,13 @@ class borowingController {
       res
         .status(400)
         .json({ massage: "Các trường dữ liệu không được để trống" });
-    } else if (!dayStart || isNaN(dayStart.getTime())) {
+    } else if (!dayStart) {
       res.status(400).json({ massage: "Ngày mượn không đúng định dạng" });
     } else if (dayStart > today) {
       res
         .status(400)
         .json({ massage: "Ngày mượn không được lớn hơn ngày hôm nay" });
-    } else if (!dayEnd || isNaN(dayEnd.getTime())) {
+    } else if (!dayEnd ) {
       res.status(400).json({ massage: "Ngày trả không đúng định dạng" });
     } else if (dateEnd < today) {
       res
@@ -65,7 +65,9 @@ class borowingController {
   }
   index(req, res) {
     borowingModel.find({}).then((br) => {
-      res.render("");
+      res.render("listBrowing",{
+        br : mutipleMongoosetoObject(br)
+      });
     });
   }
   getapi(req, res, next) {
@@ -100,30 +102,6 @@ class borowingController {
     } catch (error) {
       res.status(500).json({ message: "Lỗi Server" });
       console.log(error);
-    }
-  }
-  async totalPrice(req, res) {
-    try {
-      const { dateStart, dateEnd } = req.body;
-    // Chuyển đổi chuỗi ngày thành đối tượng Date
-    const startDateObj = new Date(dateStart);
-    const endDateObj = new Date(dateEnd);
-    // Tìm các phiếu mượn hoặc giao dịch trong khoảng thời gian
-    if (dateStart == "" || dateEnd == "") {
-      res.status(400).json({message: "Mời Bạn Chọn Ngày Cần Tính"});
-      return;
-    }
-    const transactions = await borowingModel.find({
-      createdAt: { $gte: startDateObj, $lte: endDateObj },
-    });
-    let total = 0;
-    transactions.forEach((transactions) => {
-      total += transactions.price;
-    });
-    res.status(200).json(total)
-    } catch (error) {
-      res.status(500).json({message : "Lỗi Server"})
-      console.log(error)
     }
   }
 }
