@@ -1,14 +1,23 @@
 const librarian = require("../Model/Librarian.Model");
 const bcrypt = require("bcrypt");
 const { mutipleMongoosetoObject } = require("../Util/mongoUtil");
+const notifier = require('node-notifier');
 class librarianController {
   index(req, res) {
+<<<<<<< HEAD
     res.render("listLibrarian");
+=======
+    librarian.find({}).then((lb) => {
+      res.render("listLibrarian", {
+        lb: mutipleMongoosetoObject(lb),
+      });
+    });
+>>>>>>> vinh
   }
   indexadd(req, res) {
     res.render("addLibrarian");
   }
-  Addlibrarian(req, res, next) {
+  Addlibrarian(req,res){
     const name = req.body.name;
     const sex = req.body.sex;
     const birthday = req.body.birthday;
@@ -17,13 +26,9 @@ class librarianController {
     const phone = req.body.phone;
     const dateWork = req.body.dateWork;
     const password = req.body.password;
-
     let bithdayDate = new Date(birthday);
     let dateWorkday = new Date(dateWork);
     let today = new Date();
-    console.log("bithday: " + bithdayDate);
-    console.log("today" + today);
-    console.log("date work" + dateWorkday);
     if (
       name == "" ||
       sex == "" ||
@@ -34,52 +39,48 @@ class librarianController {
       dateWork == "" ||
       password == ""
     ) {
-      res
-        .status(500)
-        .json({ message: "Các trường dữ liệu không được để trống" });
+      notifier.notify({
+        message: 'Các Trường Không Được Để Trống'
+      });
     } else if (!/^[a-zA-Z]+$/.test(name)) {
-      res.json({
-        status: "FAILED",
-        message: "Name sai định dạng",
+      notifier.notify({
+        message: 'Name sai định dạng'
       });
     } else if (
-      !/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i.test(
+      !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(
         email
       )
     ) {
-      res.json({
-        status: "FAILED",
-        message: "Email không hợp lệ",
+      notifier.notify({
+        message: 'Email sai định dạng'
       });
     } else if (!/(((\+|)84)|0)(3|5|7|8|9)+([0-9]{8})\b/.test(phone)) {
-      res.json({
-        status: "FAILED",
-        message: "Phone không hợp lệ",
+      notifier.notify({
+        message: 'Phone sai định dạng'
       });
     } else if (!bithdayDate || isNaN(bithdayDate.getTime())) {
-      res.json({
-        status: "FAILED",
-        message: "Bithday không hợp lệ",
+      notifier.notify({
+        message: 'Bithday sai định dạng'
       });
     } else if (bithdayDate > today) {
-      res.json({
-        status: "FAILED",
-        message: "Bithday không được lớn hơn ngày hôm nay",
+      notifier.notify({
+        message: 'Bithday không được lớn hơn ngày hôm nay'
       });
+      
     } else if (!dateWorkday || isNaN(dateWorkday.getTime())) {
-      res.json({
-        status: "FAILED",
-        message: "DateWork không hợp lệ",
+      notifier.notify({
+        message: 'DateWord không hợp lệ'
       });
     } else if (dateWorkday > today) {
-      res.json({
-        status: "FAILED",
-        message: "DateWork không được lớn hơn ngày hôm nay",
+      notifier.notify({
+        message: 'DateWork không được lớn hơn ngày hôm nay'
       });
     } else {
       librarian.findOne({ email: email }).then((data) => {
         if (data) {
-          res.status(400).json({ message: "Email đã tồn tại" });
+          notifier.notify({
+            message: 'Email đã tồn tại'
+          });
         } else {
           bcrypt.hash(password, 10, (error, handlepass) => {
             if (error) {
@@ -136,33 +137,8 @@ class librarianController {
         console.log(err);
       });
   }
-
-  UpdateLibrarian(req, res) {
-    librarian
-      .updateOne(
-        {
-          _id: req.params.id,
-        },
-        {
-          name: req.body.name,
-          sex: req.body.sex,
-          birthday: req.body.birthday,
-          address: req.body.address,
-          phone: req.body.phone,
-          email: req.body.email,
-          dateWork: req.body.dateWork,
-        }
-      )
-      .then(() => {
-        res.status(200).json({ message: "update thành công" });
-      })
-      .catch((err) => {
-        res.status(400).json({ error: err });
-        console.log(err);
-      });
-  }
-
-  async changePassword(req, res) {
+  
+  async changePasswordAPI(req, res) {
     const password = req.body.password;
     const newpassword = req.body.newpassword;
     const comfirm_password = req.body.comfirm_password;
@@ -183,13 +159,31 @@ class librarianController {
           } else if (newpassword != comfirm_password) {
             res.status(400).json({ message: "Password nhập lại không đúng" });
           } else {
+<<<<<<< HEAD
             console.log("ok");
+=======
+            const hashedNewPassword = await bcrypt.hash(newpassword, 10);
+            await librarian.updateOne(
+              { _id: req.params.id },
+              { password: hashedNewPassword }
+            );
+            return res
+              .status(200)
+              .json({ message: "Cập nhật mật khẩu thành công" });
+>>>>>>> vinh
           }
         }
       });
     } catch (error) {
       res.status(500).json({ error: err });
     }
+  }
+  deleteLibrarian(req, res, next) {
+    librarian.deleteOne({ _id: req.params.id })
+      .then(() => {
+        res.redirect("back");
+      })
+      .catch(next);
   }
   getApi(req, res) {
     librarian.find().then((librarian) => {
@@ -198,6 +192,7 @@ class librarianController {
       });
     });
   }
+<<<<<<< HEAD
   getdanhsach(req, res) {
     librarian
       .find()
@@ -208,5 +203,8 @@ class librarianController {
         });
       });
   }
+=======
+ 
+>>>>>>> vinh
 }
 module.exports = new librarianController();

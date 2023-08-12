@@ -2,7 +2,7 @@ const Admin = require("../Model/Admin.Model");
 const bcrypt = require("bcrypt");
 class AdminController {
   index(req, res) {
-    res.render("login",{layout: "main"});
+    res.render("login", { layout: "main" });
   }
 
   registerAdmin(req, res, next) {
@@ -12,17 +12,23 @@ class AdminController {
       if (err) {
         return res.status(500).json({ error: err });
       } else {
-        return Admin.create({
-          email: email,
-          name: name,
-          password: handlePassword,
-        })
-          .then((data) => {
-            res.status(200).json(data);
-          })
-          .catch((err) => {
-            res.status(500).json({ message: "Tạo admin thất bại" });
-          });
+        Admin.findOne({ email: email }).then((data) => {
+          if (data) {
+            res.status(400).json({ message: "Email Đã Tồn Tại" });
+          } else {
+            return Admin.create({
+              email: email,
+              name: name,
+              password: handlePassword,
+            })
+              .then((data) => {
+                res.status(200).json(data);
+              })
+              .catch((err) => {
+                res.status(500).json({ message: "Tạo admin thất bại" });
+              });
+          }
+        });
       }
     });
   }
@@ -36,7 +42,8 @@ class AdminController {
         } else {
           bcrypt.compare(password, data.password).then((match) => {
             if (match) {
-              res.status(200).json({ message: "Đăng nhập thành công" });
+              res
+              .redirect("/Librarian/listLibrarian")
             } else {
               res
                 .status(400)

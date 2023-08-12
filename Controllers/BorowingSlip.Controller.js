@@ -2,10 +2,14 @@ const borowingModel = require("../Model/BorowingSlip.Model");
 const Librarian = require("../Model/Librarian.Model");
 const User = require("../Model/User.Model");
 const Book = require("../Model/Books.Model");
+<<<<<<< HEAD
 const { mutipleMongoosetoObject } = require("../Util/mongoUtil");
 //định dạng ngày tháng
 const moment = require("moment");
 const BooksModel = require("../Model/Books.Model");
+=======
+const { mutipleMongoosetoObject} = require("../Util/mongoUtil");
+>>>>>>> vinh
 class borowingController {
   async addBorowing(req, res) {
     const book = req.body.book;
@@ -14,9 +18,9 @@ class borowingController {
     const dateStart = req.body.dateStart;
     const dateEnd = req.body.dateEnd;
     const price = req.body.price;
-
-    let dayStart = new Date(dateStart);
-    let dayEnd = new Date(dateEnd);
+    const bookQuantity = await Book.findById(book);
+    let dayStart = new Date(dateStart.getTime());
+    let dayEnd = new Date(dateEnd.getTime());
     let today = new Date();
     if (
       book == "" ||
@@ -29,25 +33,32 @@ class borowingController {
       res
         .status(400)
         .json({ massage: "Các trường dữ liệu không được để trống" });
-    } else if (!dayStart || isNaN(dayStart.getTime())) {
+    } else if (!dayStart) {
       res.status(400).json({ massage: "Ngày mượn không đúng định dạng" });
     } else if (dayStart > today) {
       res
         .status(400)
         .json({ massage: "Ngày mượn không được lớn hơn ngày hôm nay" });
-    } else if (!dayEnd || isNaN(dayEnd.getTime())) {
+    } else if (!dayEnd ) {
       res.status(400).json({ massage: "Ngày trả không đúng định dạng" });
     } else if (dateEnd < today) {
       res
         .status(400)
         .json({ massage: "Ngày trả không được nhỏ hơn ngày hôm nay" });
+    } else if (bookQuantity.quanity <= 0) {
+      res.status(400).json({ massage: "Số Lượng Sách Trong Kho Đã Hết" });
     } else {
       const borowing = new borowingModel(req.body);
       borowing.status = "0";
+      bookQuantity.quanity -= 1;
+      await bookQuantity.save();
       const save = await borowing.save();
       if (req.body.book) {
         const newBook = await Book.findById(req.body.book);
+<<<<<<< HEAD
         console.log("BOOK :" + newBook);
+=======
+>>>>>>> vinh
         await newBook.updateOne({ $push: { borowing: save._id } });
       }
       if (req.body.librarian) {
@@ -62,6 +73,13 @@ class borowingController {
       }
       res.status(200).json({ massage: "Add thành công" });
     }
+  }
+  index(req, res) {
+    borowingModel.find({}).then((br) => {
+      res.render("listBrowing",{
+        br : mutipleMongoosetoObject(br)
+      });
+    });
   }
   getapi(req, res, next) {
     borowingModel.find({}).then((borowing) => {

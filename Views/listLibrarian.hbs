@@ -8,36 +8,102 @@
       style="background-color: #FC6011;color: white;margin-left: 1000px;"
     >Thêm Thành Viên</a>
   </div>
-  <div style="margin-top: 20px;">
-    <table class="table">
-      <thead>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">STT</th>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Birthday</th>
+        <th scope="col">Sex</th>
+        <th scope="col">Address</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each lb}}
         <tr>
-          <th scope="col">#</th>
-          <th scope="col">First</th>
-          <th scope="col">Last</th>
-          <th scope="col">Handle</th>
+          <th>{{sum @index 1}}</th>
+          <td>{{this.name}}</td>
+          <td>{{this.email}}</td>
+          <td>{{this.birthday}}</td>
+          <td>{{this.sex}}</td>
+          <td>{{this.address}}</td>
+          <td><div class="dropdown show">
+              <a
+                class="dropdown-toggle"
+                href="#"
+                role="button"
+                id="dropdownMenuLink"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+              </a>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <a
+                  class="btn btn-danger"
+                  data-toggle="modal"
+                  data-target="#delete-User-model"
+                  data-id="{{this._id}}"
+                >
+                  DELETE
+                </a>
+                <a class="btn btn-primary" href="/Librarian/{{this._id}}/editLibrarian">EDIT</a>
+              </div>
+            </div></td>
         </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-        </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <th scope="row">3</th>
-          <td>Larry</td>
-          <td>the Bird</td>
-          <td>@twitter</td>
-        </tr>
-      </tbody>
-    </table>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
+
+<div id="delete-User-model" class="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Thông Báo</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Bạn Có Chắc Là Muốn Xóa Nó Không ?</p>
+        <p>Khi Xóa Dữ Liệu Sẽ Không Khôi Phục Được !</p>
+      </div>
+      <div class="modal-footer">
+        <button
+          id="btn-delete-user"
+          type="button"
+          class="btn btn-danger"
+        >DELETE</button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-dismiss="modal"
+        >Close</button>
+      </div>
+    </div>
   </div>
 </div>
+<form name="from-delete" method="POST"></form>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var idsp;
+    var deleteFrom = document.forms['from-delete']
+    $('#delete-User-model').on('show.bs.modal', function (even)  {
+      var btn_delete = $(even.relatedTarget)
+      idsp = btn_delete.data("id")
+    });
+    var btn = document.getElementById('btn-delete-user')
+    btn.onclick = function () {
+      deleteFrom.action = idsp + '?_method=DELETE';
+      deleteFrom.submit();
+    }
+  })
+</script>
