@@ -187,7 +187,8 @@ class borowingController {
   }
 
   async doanhthutoday(req, res, next) {
-    const data = new Date();
+    const date = new Date();
+    //console.log(data);
     const startbirthDate = new Date(date);
     startbirthDate.setHours(0, 0, 0, 0);
     const endbirthDate = new Date(date);
