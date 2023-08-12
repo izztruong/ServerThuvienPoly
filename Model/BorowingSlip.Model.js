@@ -1,30 +1,33 @@
-const  mongoose  = require("mongoose");
+const mongoose = require("mongoose");
 
-const BorowingSlip = new mongoose.Schema({
-    book : {
-        type: mongoose.Schema.Types.ObjectId,
-        ref:'Books'
+const BorowingSlip = new mongoose.Schema(
+  {
+    book: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Books",
     },
     librarian: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref:'librarian'
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "librarian",
     },
     user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref:'User'
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
     },
     dateStart: {
-        type: Date,
+      type: Date,
     },
     dateEnd: {
-        type: Date,
+      type: String,
     },
     status: {
-        type: String,
+      type: String,
     },
     price: {
-        type:Number
-    }
-},{timestamps:true})
-    
+      type: Number,
+    },
+  },
+  { timestamps: true }
+);
+
 module.exports = new mongoose.model("BorowingSlip", BorowingSlip);

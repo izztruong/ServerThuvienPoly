@@ -134,7 +134,7 @@ class librarianController {
       });
   }
   
-  async changePasswordAPI(req, res) {
+  async changePassword(req, res) {
     const password = req.body.password;
     const newpassword = req.body.newpassword;
     const comfirm_password = req.body.comfirm_password;
@@ -184,6 +184,15 @@ class librarianController {
       });
     });
   }
- 
+  getdanhsach(req, res) {
+    librarian
+      .find()
+      .limit(2)
+      .then((librarian) => {
+        res.json({
+          librarian: mutipleMongoosetoObject(librarian),
+        });
+      });
+  }
 }
 module.exports = new librarianController();

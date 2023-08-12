@@ -1,0 +1,89 @@
+
+<form action="/Book1/updateBook/{{book._id}}" method="post">
+    <div class="container" style="background-color: #F0F5F9; padding: 10px; margin: 10px 0; ">
+        <div class="title">
+            <span style="margin-left: 10px;font-size: 20px; font-weight: bold;">{{title}}</span>
+        </div>
+        <div class="button-add " style="display: flex;align-items: center;justify-content: end;">
+            <button type="submit" class="btn" style="background-color: #FC6011;color: white;">Hoàn
+                thành
+            </button>
+            <i class="fa-solid fa-plus"
+                style="color: white;padding: 10px;margin-left: 2px;background-color: #FC6011;"></i>
+
+        </div>
+
+
+    </div>
+    <div class="container" style="background-color: #F0F5F9; padding: 10px; margin: 10px 0;">
+        <div class="row">
+            <div class="col ">
+                <div class="form-group">
+                    <label for="nameBook">Tên sách:</label>
+                    <input type="text" value="{{book.nameBook}}" class="form-control" id="nameBook" name="nameBook" 
+                    style="border: 1px solid 
+                    #FC6011;">
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label for="categoryBook">Thể loại:</label>
+                    <select value="{{book.nameCategory}}" class="form-control" id="nameCategory" name="categoryBook"style="border: 1px solid #FC6011;" > 
+                        {{#each categoryBook}}
+                        <option name="categoryBook" value="{{this._id}}" >{{this.nameCategory}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col ">
+                <div class="form-group">
+                    <label for="pubshingCompany">Nhà xuất bản:</label>
+                    <input type="text" class="form-control" id="publishingCompany" style="border: 1px solid #FC6011;" value="{{book.publishingCompany}}" name="publishingCompany">
+                </div>
+            </div>
+            <div class="col ">
+                <div class="form-group">
+                    <label for="pubshingYear">Năm xuất bản:</label>
+                    <input type="text" class="form-control" id="publishingYear" style="border: 1px solid #FC6011;"
+                        value="{{book.publishingYear}}" name="publishingYear">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col ">
+                <div class="form-group">
+                    <label for="author">Tác giả:</label>
+                    <input type="text" class="form-control" id="author" style="border: 1px solid #FC6011;"value="{{book.author}}" name="author">
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label for="price">Giá cho thuê:</label>
+                    <input type="text" class="form-control" id="price" style="border: 1px solid #FC6011;" value="{{book.price}}" name="price">
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="image">Ảnh:</label>
+                    <input type="text" class="form-control" id="image" style="border: 1px solid #FC6011;" value="{{book.image}}" name="image">
+
+                    <input type="file" id="image" style="border: 1px solid #FC6011;">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="comment">Mô tả:</label>
+                    <textarea class="form-control" rows="5" id="comment" style="border: 1px solid #FC6011;"></textarea>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</form>

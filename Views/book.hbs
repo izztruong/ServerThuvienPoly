@@ -1,30 +1,129 @@
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-    </tr>
-  </tbody>
-</table>
+<div class="container" style="margin:0px ">
+
+  <div class="container"  style=" padding: 5px; margin: 5px 0; width:auto;background-color:#D9D9D9 ;align-item-center">
+    <div class="title">
+      <span style="margin-left: 10px;font-size: 20px; font-weight: bold;">{{title}}</span>
+    </div>
+    <div class="button-add " style="display: flex;
+    justify-content: end;
+    backgrounf-color:red ;">
+    <form action="/book1/add" method="post">
+      <button type="submit" class="btn" style="background-color: #FC6011;color: white;">Thêm mới
+      </button>
+      <i class="fa-solid fa-plus" style="color: white;padding: 10px;margin-left: 2px;background-color: #FC6011;"></i>
+</form>
+    </div>
+
+
+  </div>
+
+  <nav class="navbar navbar-expand-sm bg-light navbar-dark justify-content-between "
+    style="align-items:center;padding: 10px;">
+    <form class="form-inline" action="/action_page.php">
+      <input class="form-control mr-sm-2" type="text" placeholder="Search">
+      <button class="btn btn-success" style="background-color: #FC6011;" type="submit">Search</button>
+    </form>
+    <div class="fill form-inline ">
+      <div class="dropdown" style="margin: 0 10px;">
+        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+          style="background-color: #FC6011;">
+          Thể loại
+        </button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="#">Link 1</a>
+          <a class="dropdown-item" href="#">Link 2</a>
+          <a class="dropdown-item" href="#">Link 3</a>
+        </div>
+      </div>
+      <div class="dropdown" style="margin: 0 10px;">
+        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+          style="background-color: #FC6011;">
+          Giá thuê
+        </button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="#">Link 1</a>
+          <a class="dropdown-item" href="#">Link 2</a>
+          <a class="dropdown-item" href="#">Link 3</a>
+        </div>
+      </div>
+      <div class="dropdown" style="margin: 0 10px;">
+        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+          style="background-color: #FC6011;">
+          Ngôn ngữ
+        </button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="#">Link 1</a>
+          <a class="dropdown-item" href="#">Link 2</a>
+          <a class="dropdown-item" href="#">Link 3</a>
+        </div>
+      </div>
+      <div class="dropdown" style="margin: 0 10px;">
+        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+          style="background-color: #FC6011;">
+          Bộ lọc nâng cao
+        </button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="#">Link 1</a>
+          <a class="dropdown-item" href="#">Link 2</a>
+          <a class="dropdown-item" href="#">Link 3</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div style="margin: 20px 0;">
+    <table class="table">
+      <thead>
+        <tr>
+
+          <th scope="col" class="col-2" style="background-color: #D9D9D9;">Ảnh</th>
+          <th scope="col" class="col-3" style="background-color: #D9D9D9;">Tên sách</th>
+          <th scope="col" class="col-2" style="background-color: #D9D9D9;">Thể loại</th>
+          <th scope="col" class="col-2" style="background-color: #D9D9D9;">NXB</th>
+          <th scope="col" class="col-1" style="background-color: #D9D9D9;">Giá thuê</th>
+          <th scope="col" class="col-2" style="background-color: #D9D9D9;">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each data.arrBook}}
+        <tr>
+          <td style="width: 180px;height: 200px;"><img
+              src={{this.image}}
+              class="rounded img-fluid" alt=""></td>
+          <td>{{this.nameBook}}</td>
+          <td>{{this.categoryBook.nameCategory}}</td>
+          <td>{{this.publishingCompany}}</td>
+          <td>{{this.price}}</td>
+          <td class="row"><a  href="/Book1/{{this._id}}" style="width:80px;height:30px;background-color:#FC6011; margin-right:5px" class="btn  ">EDIT</a>
+            <button type="button" class="btn " style="width:80px;height:30px;background-color:#FC6011; "data-bs-toggle="modal" data-bs-target="#delete{{this._id}}">
+              DELETE
+            </button>
+            <div class="modal fade" id="delete{{this._id}}" tabindex="-1" aria-labelledby="delete{{this._id}}"
+              aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="delete{{this._id}}">Delete Book?
+                    </h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    Do you want delete this Book?
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                    <form action="/Book1/deleteBook/{{this._id}}" method="post">
+                      <input type="hidden" value={{this._id}} name="_id">
+                      <button type="submit" class="btn btn-primary">Yes</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</div>

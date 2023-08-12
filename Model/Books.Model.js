@@ -27,24 +27,19 @@ const Book = new mongoose.Schema(
     },
     languages: {
       type: String,
-      required: true,
     },
     quanity: {
       type: Number,
-      required: true,
     },
     price: {
       type: Number,
-      required: true,
     },
-    borowing: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "BorowingSlip",
-      },
-    ],
+    loanCount: {
+      type: Number,
+    },
   },
   { timestamps: true }
 );
-const bookModel = mongoose.model("Books", Book);
-module.exports = bookModel;
+// const bookModel = mongoose.model("Books", Book);
+// module.exports = bookModel;
+module.exports = new mongoose.model("Books", Book);
