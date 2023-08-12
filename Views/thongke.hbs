@@ -1,0 +1,109 @@
+<div class="container">
+    <div style="border: 1px solid #FC6011; border-radius: 10px; padding: 10px;">
+        <div class="title">
+            <h2>THỐNG KÊ</h2>
+        </div>
+        <form action="/BorowingSlip/doanhthu" method="post">
+        <div class="row ">
+            <div class="col startdate">
+                <label for="datepickerstart">Từ ngày:</label>
+                <input type="text" id="datepickerstart" name="dayStart" width="276" />
+            </div>
+
+            <div class="col enddate">
+                <label for="datepickerend"> Đến ngày:</label>
+                <input id="datepickerend" name="dayEnd" width="276" />
+            </div>
+            <div class="col">
+                <br>
+                <button class="btn" type="submit" style="background-color: #3EA6FE;color: aliceblue;" >Xem</button>
+            </div>
+        </div>
+        </form>
+
+    </div>
+    <div style="">
+        <div class="row d-flex justify-content-between align-items-center " style="padding: 10px; ">
+            <div class="col">
+                <div class="item row " style="width: 85%; background-color: #3EA6FE;border-radius: 5px; padding: 10px;">
+                    <div class="icon col-5 d-flex justify-content-center align-items-center " style="">
+                        <i style="width: 50%;font-size: 50px; color: aliceblue;" class="fa-solid fa-money-bill"></i>
+                    </div>
+                    <div class="col-7">
+                        <h4 style="color: aliceblue;">Doanh thu:</h4>
+                        <span id="doanhthu" style="color: aliceblue;">{{doanhthu}}</span>
+                        <span style="color: aliceblue;">VND</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col d-flex justify-content-center align-items-center">
+                <div class="item row " style="width: 85%;background-color: #3EA6FE;border-radius: 5px; padding: 10px;">
+                    <div class="icon col-5 d-flex justify-content-center align-items-center ">
+                        <i style="width: 50%;font-size: 50px; color: aliceblue;" class="fa-solid fa-book"></i>
+                    </div>
+                    <div class="col-7">
+                        <h4 style="color: aliceblue;">SÁCH:</h4>
+                        <span id="doanhthu" style="color: aliceblue;">{{countBook}}</span>
+                        <span style="color: aliceblue;">Quyển</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col d-flex justify-content-end" style="border-radius: 5px; ">
+                <div class="item row" style="width: 85%; background-color: #3EA6FE;border-radius: 5px; padding: 10px;">
+                    <div class="icon col-5 d-flex justify-content-center align-items-center ">
+                        <i style="width: 50%;font-size: 50px; color: aliceblue;" class="fa-solid fa-scroll"></i>
+                    </div>
+                    <div class="col-7">
+                        <h4 style="color: aliceblue;">Phiếu mượn:</h4>
+                        <span style="color: aliceblue;" id="doanhthu">{{count}}</span>
+                        <span style="color: aliceblue;">Lượt</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="chart">
+            <div class="type">
+                <a href="" class="btn" style="background-color: #FC6011;color: aliceblue;">Tuần</a>
+                <a href="" class="btn" style="background-color: #FC6011;color: aliceblue;">Tháng</a>
+            </div>
+            <div style="width: 80%; padding: 10px;">
+                <canvas id="myChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    $('#datepickerstart').datepicker({
+        uiLibrary: 'bootstrap5'
+    });
+    $('#datepickerend').datepicker({
+        uiLibrary: 'bootstrap5'
+    });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const ctx = document.getElementById('myChart');
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: [{{listday1}}],
+            datasets: [{
+                label: 'Doanh thu',
+                data: [{{listdoanhthu}}],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>

@@ -1,26 +1,35 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const User = new mongoose.Schema({
-    UserId: {
-        type: String,
-        required: true
-    },
+const User = new mongoose.Schema(
+  {
     name: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     sex: {
-        type: String,
+      type: String,
+      required: true,
     },
-    address:{
-        type: String
+    address: {
+      type: String,
+      required: true,
     },
     phone: {
-        type: String,
+      type: String,
+      required: true,
     },
     email: {
-        type: String
-    }
-}, { timestamps: true })
+      type: String,
+      required: true,
+    },
+    borowing: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "BorowingSlip",
+      },
+    ],
+  },
+  { timestamps: true }
+);
 
-module.exports= new mongoose.model("User",User)
+module.exports = new mongoose.model("User", User);

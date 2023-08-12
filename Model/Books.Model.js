@@ -27,15 +27,12 @@ const Book = new mongoose.Schema(
     },
     languages: {
       type: String,
-      required: true,
     },
     quanity: {
       type: Number,
-      required: true,
     },
     price: {
       type: Number,
-      required: true,
     },
     loanCount: {
       type: Number,
@@ -43,5 +40,6 @@ const Book = new mongoose.Schema(
   },
   { timestamps: true }
 );
-const bookModel = mongoose.model("Books", Book);
-module.exports = bookModel;
+// const bookModel = mongoose.model("Books", Book);
+// module.exports = bookModel;
+module.exports = new mongoose.model("Books", Book);
