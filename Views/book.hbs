@@ -7,11 +7,11 @@
     <div class="button-add " style="display: flex;
     justify-content: end;
     backgrounf-color:red ;">
-    <form action="/book1/add" method="post">
-      <button type="submit" class="btn" style="background-color: #FC6011;color: white;">Thêm mới
-      </button>
+   
+      <a href="/book/addbook" class="btn" style="background-color: #FC6011;color: white;">Thêm mới
+      </a>
       <i class="fa-solid fa-plus" style="color: white;padding: 10px;margin-left: 2px;background-color: #FC6011;"></i>
-</form>
+
     </div>
 
 
@@ -85,7 +85,7 @@
         </tr>
       </thead>
       <tbody>
-        {{#each data.arrBook}}
+        {{#each arrBook}}
         <tr>
           <td style="width: 180px;height: 200px;"><img
               src={{this.image}}
@@ -94,7 +94,7 @@
           <td>{{this.categoryBook.nameCategory}}</td>
           <td>{{this.publishingCompany}}</td>
           <td>{{this.price}}</td>
-          <td class="row"><a  href="/Book1/{{this._id}}" style="width:80px;height:30px;background-color:#FC6011; margin-right:5px" class="btn  ">EDIT</a>
+          <td class="row"><a  href="/book/{{this._id}}" style="width:80px;height:30px;background-color:#FC6011; margin-right:5px" class="btn  ">EDIT</a>
             <button type="button" class="btn " style="width:80px;height:30px;background-color:#FC6011; "data-bs-toggle="modal" data-bs-target="#delete{{this._id}}">
               DELETE
             </button>
@@ -112,7 +112,7 @@
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                    <form action="/Book1/deleteBook/{{this._id}}" method="post">
+                    <form action="/book/deletebook/{{this._id}}" method="post">
                       <input type="hidden" value={{this._id}} name="_id">
                       <button type="submit" class="btn btn-primary">Yes</button>
                     </form>

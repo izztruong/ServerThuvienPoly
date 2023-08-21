@@ -1,45 +1,27 @@
-const bookModel = require("../Model/Books.Model");
+const bookmodel = require("../Model/Books.Model");
 const cloudinary = require("cloudinary").v2;
 const { mutipleMongoosetoObject } = require("../Util/mongoUtil");
 const categoryModel = require("../Model/CategoryBook.Model");
 
-class BookController1 {
+class bookController {
   async index(req, res) {
-    res.render("add", {
-      layout: "home",
-      title: "Thêm mới",
-    });
-  }
-
-  async add(req, res) {
-    const category = await categoryModel.find().then((data) => {
-      res.render("addBook", {
-        layout: "home",
-        categoryBook: mutipleMongoosetoObject(data),
-        title: "Thêm sách",
+    bookmodel
+      .find({})
+      .populate("categoryBook")
+      .limit(10)
+      .then((book) => {
+        res.render("book", {
+          arrBook: mutipleMongoosetoObject(book),
+          layout: "home",
+        });
       });
-    });
   }
 
-  async getBookbyId(req, res, next) {
-    const book = await bookModel
-      .findById(req.params.idBook)
-      .populate("categoryBook");
-    const category = await categoryModel.find();
-
-    if (!book) {
-      return res.status(404).json({ message: "Book not found" });
-    }
-
-    res.render("updateBook", {
-      layout: "home",
-      book: book.toJSON(),
-      categoryBook: category.map((categoryBook) => categoryBook.toObject()),
-      title: "Update Book",
-    });
+  indexadd(req, res) {
+    res.render("addBook");
   }
 
-  async addBook(req, res, next) {
+  addBook(req, res) {
     const book = req.body;
     const img = req.file;
     const publishingYear = req.body.publishingYear;
@@ -83,24 +65,15 @@ class BookController1 {
       book.image = img?.path;
     }
 
-    const items = new bookModel(book);
+    const items = new bookmodel(book);
 
     try {
       console.log(items);
-      await items.save();
+      items.save();
+      res.redirect("/book/indexbook");
     } catch (error) {
       console.log(error);
     }
-  }
-
-  async deleteBook(req, res, next) {
-    const idBook = req.params.idBook;
-    const deleteBook = await bookModel.findByIdAndDelete(idBook);
-    if (!deleteBook) {
-      return res.status(404).json({ message: "Book not found" });
-    }
-
-    res.redirect("/Book1/listBook");
   }
 
   async updateBook(req, res, next) {
@@ -111,7 +84,7 @@ class BookController1 {
     if (!img == undefined) {
       book.image = img?.path;
     }
-    const updateBook = await bookModel.findOneAndUpdate(
+    const updateBook = await bookmodel.findOneAndUpdate(
       { _id: bookid },
       req.body
     );
@@ -121,36 +94,33 @@ class BookController1 {
     console.log("ok");
     res.redirect("/Book1/listBook");
   }
-
-  // lọc theo thể loại
-  async getBookFollowCategoryBook(req, res, next) {
-    const categoryBook = req.params.categoryBook;
-    const books = await bookModel.find({ categoryBook: categoryBook });
-    if (!books) {
-      return res.status(404).json({ message: "Category not found" });
+  async deleteBook(req, res, next) {
+    const idBook = req.params.idBook;
+    const deleteBook = await bookmodel.findByIdAndDelete(idBook);
+    if (!deleteBook) {
+      return res.status(404).json({ message: "Book not found" });
     }
-    res.status(200).json(books);
+
+    res.redirect("/book/indexbook");
   }
 
-  async listBook(req, res, next) {
-    const arrBook = await bookModel.find().populate("categoryBook");
-    const data = {
-      arrBook: arrBook.map((book) => book.toObject()),
-      title: "Danh sách sách",
-    };
+  async getBookbyId(req, res, next) {
+    const book = await bookmodel
+      .findById(req.params.idBook)
+      .populate("categoryBook");
+    const category = await categoryModel.find();
 
-    res.render("book", { data });
-  }
+    if (!book) {
+      return res.status(404).json({ message: "Book not found" });
+    }
 
-  async listBook10(req, res, next) {
-    bookModel
-      .find()
-      .limit(13)
-      .then((book) => {
-        res.render("book", {
-          arrBook: mutipleMongoosetoObject(book),
-        });
-      });
+    res.render("updateBook", {
+      layout: "home",
+      book: book.toJSON(),
+      categoryBook: category.map((categoryBook) => categoryBook.toObject()),
+      title: "Update Book",
+    });
   }
 }
-module.exports = new BookController1();
+
+module.exports = new bookController();

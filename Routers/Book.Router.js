@@ -1,28 +1,13 @@
-const express = require("express");
-const routers = express.Router();
-const BookController = require("../Controllers/Book.Controller");
+const expess = require("express");
+const router = expess.Router();
 const uploadImg = require("../Middleware/uploadImg");
 
-routers.post("/addBook", uploadImg.single("image"), BookController.addBook);
-<<<<<<< HEAD
-routers.post(
-  "/updateBook/:idBook",
-  uploadImg.single("image"),
-  BookController.updateBook
-);
-routers.post("/deleteBook/:idBook", BookController.deleteBook);
-routers.get("/listBook", BookController.getlist);
-routers.get("/:idBook", BookController.getBookById);
-=======
-routers.put("/updateBook/:idBook", BookController.updateBook);
-routers.delete("/deleteBook/:idBook", BookController.deleteBook);
-routers.get("/api", BookController.listBook);
-routers.get("/:idBook", BookController.getBookbyId);
->>>>>>> vinh
-routers.get(
-  "/getBookFollowCategoryBook/:categoryBook",
-  BookController.getBookFollowCategoryBook
-);
-routers.get("/listBook10", BookController.getlist10);
+const book = require("../Controllers/BookController");
 
-module.exports = routers;
+router.get("/indexbook", book.index);
+router.get("/addbook", book.indexadd);
+router.post("/addbook", uploadImg.single("image"), book.addBook);
+router.post("/updatebook/:idBook", uploadImg.single("image"), book.updateBook);
+router.post("/deletebook/:idBook", book.deleteBook);
+router.get("/:idBook", book.getBookbyId);
+module.exports = router;

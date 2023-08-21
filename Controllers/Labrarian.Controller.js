@@ -1,23 +1,19 @@
 const librarian = require("../Model/Librarian.Model");
 const bcrypt = require("bcrypt");
 const { mutipleMongoosetoObject } = require("../Util/mongoUtil");
-const notifier = require('node-notifier');
+const notifier = require("node-notifier");
 class librarianController {
   index(req, res) {
-<<<<<<< HEAD
-    res.render("listLibrarian");
-=======
     librarian.find({}).then((lb) => {
       res.render("listLibrarian", {
         lb: mutipleMongoosetoObject(lb),
       });
     });
->>>>>>> vinh
   }
   indexadd(req, res) {
     res.render("addLibrarian");
   }
-  Addlibrarian(req,res){
+  Addlibrarian(req, res) {
     const name = req.body.name;
     const sex = req.body.sex;
     const birthday = req.body.birthday;
@@ -40,46 +36,43 @@ class librarianController {
       password == ""
     ) {
       notifier.notify({
-        message: 'Các Trường Không Được Để Trống'
+        message: "Các Trường Không Được Để Trống",
       });
     } else if (!/^[a-zA-Z]+$/.test(name)) {
       notifier.notify({
-        message: 'Name sai định dạng'
+        message: "Name sai định dạng",
       });
     } else if (
-      !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(
-        email
-      )
+      !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)
     ) {
       notifier.notify({
-        message: 'Email sai định dạng'
+        message: "Email sai định dạng",
       });
     } else if (!/(((\+|)84)|0)(3|5|7|8|9)+([0-9]{8})\b/.test(phone)) {
       notifier.notify({
-        message: 'Phone sai định dạng'
+        message: "Phone sai định dạng",
       });
     } else if (!bithdayDate || isNaN(bithdayDate.getTime())) {
       notifier.notify({
-        message: 'Bithday sai định dạng'
+        message: "Bithday sai định dạng",
       });
     } else if (bithdayDate > today) {
       notifier.notify({
-        message: 'Bithday không được lớn hơn ngày hôm nay'
+        message: "Bithday không được lớn hơn ngày hôm nay",
       });
-      
     } else if (!dateWorkday || isNaN(dateWorkday.getTime())) {
       notifier.notify({
-        message: 'DateWord không hợp lệ'
+        message: "DateWord không hợp lệ",
       });
     } else if (dateWorkday > today) {
       notifier.notify({
-        message: 'DateWork không được lớn hơn ngày hôm nay'
+        message: "DateWork không được lớn hơn ngày hôm nay",
       });
     } else {
       librarian.findOne({ email: email }).then((data) => {
         if (data) {
           notifier.notify({
-            message: 'Email đã tồn tại'
+            message: "Email đã tồn tại",
           });
         } else {
           bcrypt.hash(password, 10, (error, handlepass) => {
@@ -137,7 +130,7 @@ class librarianController {
         console.log(err);
       });
   }
-  
+
   async changePasswordAPI(req, res) {
     const password = req.body.password;
     const newpassword = req.body.newpassword;
@@ -159,9 +152,6 @@ class librarianController {
           } else if (newpassword != comfirm_password) {
             res.status(400).json({ message: "Password nhập lại không đúng" });
           } else {
-<<<<<<< HEAD
-            console.log("ok");
-=======
             const hashedNewPassword = await bcrypt.hash(newpassword, 10);
             await librarian.updateOne(
               { _id: req.params.id },
@@ -170,7 +160,6 @@ class librarianController {
             return res
               .status(200)
               .json({ message: "Cập nhật mật khẩu thành công" });
->>>>>>> vinh
           }
         }
       });
@@ -179,7 +168,8 @@ class librarianController {
     }
   }
   deleteLibrarian(req, res, next) {
-    librarian.deleteOne({ _id: req.params.id })
+    librarian
+      .deleteOne({ _id: req.params.id })
       .then(() => {
         res.redirect("back");
       })
@@ -192,19 +182,5 @@ class librarianController {
       });
     });
   }
-<<<<<<< HEAD
-  getdanhsach(req, res) {
-    librarian
-      .find()
-      .limit(2)
-      .then((librarian) => {
-        res.json({
-          librarian: mutipleMongoosetoObject(librarian),
-        });
-      });
-  }
-=======
- 
->>>>>>> vinh
 }
 module.exports = new librarianController();

@@ -1,4 +1,5 @@
 const express = require("express");
+
 const app = express();
 const dotenv = require("dotenv");
 dotenv.config();
@@ -25,6 +26,7 @@ app.set("view engine", ".hbs");
 app.set("views", "./views");
 Mongodb.connect();
 router(app);
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

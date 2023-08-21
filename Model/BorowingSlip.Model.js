@@ -15,17 +15,10 @@ const BorowingSlip = new mongoose.Schema(
       ref: "User",
     },
     dateStart: {
-<<<<<<< HEAD
       type: Date,
     },
     dateEnd: {
-      type: String,
-=======
-        type: Date,
-    },
-    dateEnd: {
-        type: Date,
->>>>>>> vinh
+      type: Date,
     },
     status: {
       type: String,

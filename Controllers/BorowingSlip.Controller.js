@@ -2,14 +2,12 @@ const borowingModel = require("../Model/BorowingSlip.Model");
 const Librarian = require("../Model/Librarian.Model");
 const User = require("../Model/User.Model");
 const Book = require("../Model/Books.Model");
-<<<<<<< HEAD
+
 const { mutipleMongoosetoObject } = require("../Util/mongoUtil");
 //định dạng ngày tháng
 const moment = require("moment");
 const BooksModel = require("../Model/Books.Model");
-=======
-const { mutipleMongoosetoObject} = require("../Util/mongoUtil");
->>>>>>> vinh
+
 class borowingController {
   async addBorowing(req, res) {
     const book = req.body.book;
@@ -39,7 +37,7 @@ class borowingController {
       res
         .status(400)
         .json({ massage: "Ngày mượn không được lớn hơn ngày hôm nay" });
-    } else if (!dayEnd ) {
+    } else if (!dayEnd) {
       res.status(400).json({ massage: "Ngày trả không đúng định dạng" });
     } else if (dateEnd < today) {
       res
@@ -55,10 +53,7 @@ class borowingController {
       const save = await borowing.save();
       if (req.body.book) {
         const newBook = await Book.findById(req.body.book);
-<<<<<<< HEAD
         console.log("BOOK :" + newBook);
-=======
->>>>>>> vinh
         await newBook.updateOne({ $push: { borowing: save._id } });
       }
       if (req.body.librarian) {
@@ -75,18 +70,25 @@ class borowingController {
     }
   }
   index(req, res) {
-    borowingModel.find({}).then((br) => {
-      res.render("listBrowing",{
-        br : mutipleMongoosetoObject(br)
+    const arr = borowingModel
+      .find({})
+
+      .then((br) => {
+        res.render("listBrowing", {
+          br: mutipleMongoosetoObject(br),
+        });
       });
-    });
+    console.log(arr);
   }
   getapi(req, res, next) {
-    borowingModel.find({}).then((borowing) => {
-      res.json({
-        borowing: mutipleMongoosetoObject(borowing),
+    borowingModel
+      .find({})
+
+      .then((borowing) => {
+        res.json({
+          borowing: mutipleMongoosetoObject(borowing),
+        });
       });
-    });
   }
 
   // indexthongke(req, res, next) {

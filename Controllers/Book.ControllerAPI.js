@@ -6,7 +6,7 @@ const {
 
 const cloudinary = require("cloudinary").v2;
 
-class BookController {
+class BookControllerAPI {
   async getlist(req, res) {
     await bookModel
       .find()
@@ -137,4 +137,4 @@ class BookController {
     });
   }
 }
-module.exports = new BookController();
+module.exports = new BookControllerAPI();
