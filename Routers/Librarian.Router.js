@@ -9,5 +9,6 @@ router.post("/loginLibrarian", librarianController.LoginLibrarian);
 router.put("/:id/changePassword", librarianController.changePasswordAPI);
 router.delete("/:id", librarianController.deleteLibrarian);
 router.get("/api", librarianController.getApi);
+router.post("/Librarian", librarianController.getLabrarian);
 
 module.exports = router;

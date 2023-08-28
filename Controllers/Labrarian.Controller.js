@@ -1,6 +1,9 @@
 const librarian = require("../Model/Librarian.Model");
 const bcrypt = require("bcrypt");
-const { mutipleMongoosetoObject } = require("../Util/mongoUtil");
+const {
+  mutipleMongoosetoObject,
+  MongoosetoObject,
+} = require("../Util/mongoUtil");
 const notifier = require("node-notifier");
 class librarianController {
   index(req, res) {
@@ -179,6 +182,15 @@ class librarianController {
     librarian.find().then((librarian) => {
       res.json({
         librarian: mutipleMongoosetoObject(librarian),
+      });
+    });
+  }
+  getLabrarian(req, res) {
+    const id = req.body.id;
+    console.log("ok");
+    librarian.findById(id).then((librarian) => {
+      res.json({
+        librarian: MongoosetoObject(librarian),
       });
     });
   }
